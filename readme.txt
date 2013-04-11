@@ -1,6 +1,7 @@
 Hi!
 
 Thanks for your interest. With this project I'm trying to create an interesting turn-based strategy about space race between USA and USSR from 1957 to about 1975.
+Inspired by board game Liftoff! and PC game Race into Space, I'm aiming to create interesting, handy and cognitive game.
 
 Installation instructions:
 Windows users:
