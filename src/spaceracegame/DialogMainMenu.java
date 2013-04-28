@@ -61,7 +61,6 @@ public class DialogMainMenu {
 
     }
     private ActionListener listenerNewGame = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             mainFrame.dispose();
@@ -86,21 +85,20 @@ public class DialogMainMenu {
         }
     };
     private ActionListener listenerLoadGame = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
-            mainFrame.dispose();
-            DialogMainField.loadGame(mainFrame);
+            int result = DialogMainField.loadGame(mainFrame);
+            if (result == 1) {
+                mainFrame.dispose();
+            }
         }
     };
     private ActionListener listenerMultiplayer = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
         }
     };
     private ActionListener listenerOptions = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             mainFrame.dispose();
@@ -108,7 +106,6 @@ public class DialogMainMenu {
         }
     };
     private ActionListener listenerQuit = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);

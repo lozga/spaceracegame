@@ -32,6 +32,12 @@ public class Mission {
     public String p_typeofactivity;
     public String p_target;
     public boolean p_manned;
+    
+    private Player player;
+
+    Mission(Player givenPlayer) {
+        player=givenPlayer;
+    }
 
     public void setType(int code) {
         missioncode = code;
@@ -166,13 +172,13 @@ public class Mission {
     }
 
     public void removeusedcomponents() {
-        for (int i = 0; i < Players.currentPlayer.warehouse.storehouse.length; i++) {
-            Players.currentPlayer.warehouse.storehouse[i] = Players.currentPlayer.warehouse.storehouse[i] + requiredcomponents[i];
+        for (int i = 0; i < player.warehouse.storehouse.length; i++) {
+            player.warehouse.storehouse[i] = player.warehouse.storehouse[i] + requiredcomponents[i];
         }
     }
 
     public void prepareUsedComponents() {
-        requiredcomponents = new int[Players.currentPlayer.warehouse.storehouse.length];
+        requiredcomponents = new int[player.warehouse.storehouse.length];
         requiredcomponents[carrier.getCode()] = -1;
         requiredcomponents[usefulpayload.getCode()] = -1;
     }
@@ -182,7 +188,7 @@ public class Mission {
             p_crew = 0;
             p_manned = false;
         } else {
-            p_crew = crews.size();
+            p_crew = usefulpayload.crew;
             p_manned = true;
 
         }

@@ -18,7 +18,7 @@ import javax.swing.table.TableModel;
  */
 public class Dateutils implements Serializable{
 
-    public static DateFormat gamedateformat = new SimpleDateFormat("MMM yyyy", new Locale (Options.language));
+    public static DateFormat gamedateformat = new SimpleDateFormat("MMM yyyy", new Locale (Options.langShort));
     public static Date gamedate= new Date();
     private static Calendar calendar = GregorianCalendar.getInstance();
 
@@ -36,6 +36,8 @@ public class Dateutils implements Serializable{
         gamedate.setTime(calendar.getTimeInMillis());
 
         System.out.println("Date initialized - "+gamedateformat.format(gamedate));
+        
+        System.out.println(Locale.getAvailableLocales().toString());
 
     }
 

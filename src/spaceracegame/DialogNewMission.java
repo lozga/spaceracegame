@@ -247,7 +247,7 @@ public class DialogNewMission {
         panelNewMission.add(panelListCrews, gbc);
 
         JPanel panelNewMissionOKCancel = new JPanel(new GridBagLayout());
-        dmsn = new Dimension(1000, 50);
+        dmsn = new Dimension(1000, 60);
         Utils.setDamnedSize(panelNewMissionOKCancel, dmsn);
 
         buttonNewMissionOK = new JButton(Localisation.getText("ok"));
@@ -357,7 +357,7 @@ public class DialogNewMission {
                         listCompartibleVehicles.getContents().addElement(Players.currentPlayer.spaceObjectArray.findObjectByCode(payloads.get(i)).getName());
                     }
                 }
-                if (payloads.size() == 1) {
+                if (listCompartibleVehicles.getContents().size() == 1) {
                     listCompartibleVehicles.setEnabled(false);
                     updateNewMissionVehicles();
                 } else {
@@ -482,7 +482,7 @@ public class DialogNewMission {
                 }
             }
         }
-        boolean isCrewSelected = radioUnmanned.isEnabled() | amountCrewSelected > 0;
+        boolean isCrewSelected = radioUnmanned.isSelected() | amountCrewSelected > 0;
         boolean isCrewSingle = amountCrewSelected == 1;
         boolean isRocketSelected = !listRocket.isSelectionEmpty();
         String errorString = "<html>";
@@ -552,7 +552,7 @@ public class DialogNewMission {
             } else {
                 vehicle = Players.currentPlayer.spaceObjectArray.findObjectByName(listCompartibleVehicles.getSelectedValue().toString());
             }
-            Mission newMission = new Mission();
+            Mission newMission = new Mission(Players.currentPlayer);
             newMission.setCarrier(rocket);
             newMission.setPayload(vehicle);
             newMission.setDate(Dateutils.getDateMonthShift(1));
@@ -561,8 +561,6 @@ public class DialogNewMission {
                 if (!listCrews[i].isSelectionEmpty()) {
                     crews.add(Players.currentPlayer.crews.findCrewByNames(listCrews[i].getSelectedValue().toString()));
                 }
-            }
-            if (!listCrews[0].isSelectionEmpty()) {
             }
             newMission.SetCrew(crews);
             newMission.setType(MissionTypesArray.findMissionTypeByName(listAvailableMissions.getSelectedValue().toString()).getCode());

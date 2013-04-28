@@ -6,6 +6,7 @@ package spaceracegame;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -204,8 +205,7 @@ public class PanelRIBs implements Serializable {
         GUIStorage Storage = new GUIStorage();
 
         Storage.panel = panel;
-        Storage.panel.setLayout(new GridLayout(0, 1));
-        JPanel[] panelrockets = new JPanel[listObjectData.size()];
+        JPanel panelmain = new JPanel();
         JLabel[] labelName = new JLabel[listObjectData.size()];
         JLabel[] labelDesc = new JLabel[listObjectData.size()];
         JToggleButton[] toggleResearch = new JToggleButton[listObjectData.size()];
@@ -215,25 +215,22 @@ public class PanelRIBs implements Serializable {
         JButton[] buttonBuy = new JButton[listObjectData.size()];
         JButton[] buttonCrew = new JButton[listObjectData.size()];
 
+                    panelmain = new JPanel(new GridBagLayout());
+                    GridBagConstraints gbc= new GridBagConstraints();
         for (int i = 0;
                 i < listObjectData.size();
                 i++) {
-
-            panelrockets[i] = new JPanel(new GridLayout(1, 0));
-
-//            JPanel panelNameModel = new JPanel(new GridLayout(0, 1));
             labelName[i] = new JLabel("<html>" + listObjectData.get(i).getName() + "<br>" + listObjectData.get(i).getModel() + "</html>");
-//            panelNameModel.add(labelName[i]);
-//            labelDesc[i] = new JLabel("<html>"+listObjectData.get(i).getModel()+"</html>");
-//            panelNameModel.add(labelDesc[i]);
-//            panelrockets[i].add(panelNameModel);
-            panelrockets[i].add(labelName[i]);
+            gbc.fill=GridBagConstraints.BOTH;
+            gbc.gridx=0;
+            gbc.gridy=i;
+            gbc.weightx=1;
+            gbc.weighty=1;
+            panelmain.add(labelName[i],gbc);
 
             labelRocketCapacity[i] = new JLabel(Integer.toString(listObjectData.get(i).getCapacity()));
-            panelrockets[i].add(labelRocketCapacity[i]);
-
-
-//            panelrockets[i].add(labelToFinishResearch[i]);
+            gbc.gridx=1;
+            panelmain.add(labelRocketCapacity[i],gbc);
 
             toggleResearch[i] = new JToggleButton();
             toggleResearch[i].setLayout(new GridLayout(0, 1));
@@ -249,7 +246,8 @@ public class PanelRIBs implements Serializable {
             toggleResearch[i].setFocusable(false);
             toggleResearch[i].setActionCommand(Integer.toString(i));
             toggleResearch[i].addActionListener(listenerToggleResearch);
-            panelrockets[i].add(toggleResearch[i]);
+            gbc.gridx=2;
+            panelmain.add(toggleResearch[i],gbc);
 
             toggleImprove[i] = new JToggleButton();
             toggleImprove[i].setLayout(new GridLayout(0, 1));
@@ -262,7 +260,8 @@ public class PanelRIBs implements Serializable {
             toggleImprove[i].setFocusable(false);
             toggleImprove[i].setActionCommand(Integer.toString(i));
             toggleImprove[i].addActionListener(listenerToggleImprove);
-            panelrockets[i].add(toggleImprove[i]);
+            gbc.gridx=3;
+            panelmain.add(toggleImprove[i],gbc);
 
             buttonBuy[i] = new JButton();
             buttonBuy[i].setLayout(new GridLayout(0, 1));
@@ -278,23 +277,21 @@ public class PanelRIBs implements Serializable {
             buttonBuy[i].setFocusable(false);
             buttonBuy[i].addActionListener(listenerBuy);
             buttonBuy[i].setActionCommand(Integer.toString(i));
-            panelrockets[i].add(buttonBuy[i]);
+            gbc.gridx=4;
+            panelmain.add(buttonBuy[i],gbc);
 
             if (player.spaceObjectArray.isMannedbycode(listObjectData.get(i).getCode())) {
                 buttonCrew[i] = new JButton(Localisation.getText("crew"));
                 buttonCrew[i].setFocusable(false);
                 buttonCrew[i].addActionListener(listenerCrewSelection);
                 buttonCrew[i].setActionCommand(Integer.toString(listObjectData.get(i).getCode()));
-                panelrockets[i].add(buttonCrew[i]);
+                gbc.gridx=5;
+                panelmain.add(buttonCrew[i],gbc);
             }
 
-            Storage.panel.add(panelrockets[i]);
+            Storage.panel=panelmain;
         }
-
         Storage.panel.validate();
-
-
-
         Storage.toggleresearch = toggleResearch;
         Storage.toggleImprove = toggleImprove;
         Storage.name = labelName;
@@ -380,7 +377,7 @@ public class PanelRIBs implements Serializable {
 
     private void verifyOKButtonsByType(ArrayList<SpaceObject> listObjects, JButton[] buttonPurchase, int storageNumber) {
 
-        for (int i = 1; i < buttonPurchase.length; i++) {
+        for (int i = 0; i < buttonPurchase.length; i++) {
             SpaceObject object = listObjects.get(i);
             if (storageImprove[storageNumber][i]) {
                 boolean possible = player.cash - object.getCostToPurchase() >= 0;
@@ -398,7 +395,7 @@ public class PanelRIBs implements Serializable {
 
     private int verifyButtonsForPurchaseCalculate(JToggleButton[] toggleResearch, JToggleButton[] toggleImprove, ArrayList<SpaceObject> listObjects) {
         int tempBudget = 0;
-        for (int i = 1; i < toggleResearch.length; i++) {
+        for (int i = 0; i < toggleResearch.length; i++) {
             SpaceObject object = listObjects.get(i);
             if (toggleResearch[i].isEnabled() & toggleResearch[i].isSelected()) {
                 tempBudget = tempBudget + object.getCostToResearch();
@@ -546,13 +543,13 @@ public class PanelRIBs implements Serializable {
 
             if (player.spaceObjectArray.isRocketbycode(player.research.research.get(i).objectcode)) {
                 //we know code of researching object. So, label with the number of number of arraylist of researches with given code is receiving count of months to finish research
-                labelRocketResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode)) + Localisation.getText("month(s)"));
+                labelRocketResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode))+" " + Localisation.getText("month(s)"));
             }
             if (player.spaceObjectArray.isPayloadbycode(player.research.research.get(i).objectcode)) {
-                labelPayloadResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode)) + Localisation.getText("month(s)"));
+                labelPayloadResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode))+" " + Localisation.getText("month(s)"));
             }
             if (player.spaceObjectArray.isMannedbycode(player.research.research.get(i).objectcode)) {
-                labelMannedResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode)) + Localisation.getText("month(s)"));
+                labelMannedResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode))+" " + Localisation.getText("month(s)"));
             }
         }
     }

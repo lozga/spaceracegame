@@ -40,8 +40,8 @@ public class DialogMainField {
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 3;
-        gbc.weighty = 3;
+        gbc.weightx = 5;
+        gbc.weighty = 5;
         gbc.gridheight = 3;
         gbc.gridwidth = 3;
         gbc.gridx = 0;
@@ -51,7 +51,7 @@ public class DialogMainField {
         panelLeft.add(createTabbedPanels());
         mainPanel.add(panelLeft, gbc);
 
-        gbc.weightx = 3;
+        gbc.weightx = 5;
         gbc.weighty = 1;
         gbc.gridheight = 1;
         gbc.gridwidth = 3;
@@ -63,7 +63,7 @@ public class DialogMainField {
         mainPanel.add(panelBottom, gbc);
 
         gbc.weightx = 1;
-        gbc.weighty = 3;
+        gbc.weighty = 5;
         gbc.gridheight = 3;
         gbc.gridwidth = 1;
         gbc.gridx = 3;
@@ -99,6 +99,10 @@ public class DialogMainField {
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainFrame.setVisible(true);
 
+        Utils.fixComponentSize(panelLeft);
+        Utils.fixComponentSize(panelRight);
+        Utils.fixComponentSize(panelBottom);
+        Utils.fixComponentSize(panelRightBottom);
     }
 
     public static JPanel createTabbedPanels() {
@@ -143,21 +147,18 @@ public class DialogMainField {
         mainFrame.setJMenuBar(menubar);
     }
     private static ActionListener listenerQuit = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }
     };
     private static ActionListener listenerLoadGame = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             loadGame(mainFrame);
         }
     };
     private static ActionListener listenerSaveGame = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             saveGame(mainFrame);
@@ -169,7 +170,7 @@ public class DialogMainField {
         if (retval == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             try {
-                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8"));
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
                 XStream xs = new XStream();
                 GameSave gs = new GameSave();
                 gs.players = Players.players;
@@ -183,7 +184,8 @@ public class DialogMainField {
         }
     }
 
-    public static void loadGame(Component givenComponent) {
+    public static int loadGame(Component givenComponent) {
+        int result=0;
         int retval = fc.showOpenDialog(givenComponent);
         if (retval == JFileChooser.APPROVE_OPTION) {
             try {
@@ -217,8 +219,9 @@ public class DialogMainField {
             }
             Players.currentPlayer = Players.players.get(0);
             PanelLabelTable.setTableData();
-
             PanelWarehouse.setWarehouse();
+            result=1;
         }
+        return result;
     }
 }

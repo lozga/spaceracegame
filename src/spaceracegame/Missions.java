@@ -162,7 +162,7 @@ public class Missions implements Serializable{
 
         if (givenMission.missiontype.manned) {
             if (givenMission.isFinished) {
-                if (givenMission.launchresult().get(givenMission.launchresult().size()).statusint == 2) { //for emergency landing 33%injury,33%death
+                if (givenMission.result.get(givenMission.result.size()-1).statusint == 2) { //for emergency landing 33%injury,33%death
                     int random = Utils.random(100);
                     if (random > 33) { //to be hit
                         if (random < 66) {
@@ -175,7 +175,7 @@ public class Missions implements Serializable{
                             }
                         }
                     }
-                } else if (givenMission.launchresult().get(givenMission.launchresult().size()).statusint == 3) { //for crash 100% death
+                } else if (givenMission.result.get(givenMission.result.size()-1).statusint == 3) { //for crash 100% death
                     Crew tempCrew = givenMission.crews.get(0);
                     for (String name : tempCrew.crewname) {
                         player.nauts.KIANaut(name);

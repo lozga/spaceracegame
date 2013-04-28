@@ -5,6 +5,9 @@
 package spaceracegame;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,16 +31,22 @@ public class PanelNextTurn {
     private static JButton buttonNextTurn;
 
     public static JPanel createNextTurnButtonPanel() {
-        JPanel returnPanel = new JPanel(new GridLayout(0, 1));
-
+        JPanel returnPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc= new GridBagConstraints();
         TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Errors", TitledBorder.CENTER, TitledBorder.CENTER);
         labelNextMonthErrors = new JLabel();
         labelNextMonthErrors.setBorder(title);
         labelNextMonthErrors.setHorizontalAlignment(JLabel.CENTER);
-        returnPanel.add(labelNextMonthErrors);
+        gbc.gridx=0;
+        gbc.gridy=0;
+        gbc.weightx=1;
+        gbc.weighty=1;
+        gbc.fill=GridBagConstraints.BOTH;
+        returnPanel.add(labelNextMonthErrors,gbc);
         buttonNextTurn = new JButton(Localisation.getText("nextturn"));
         buttonNextTurn.addActionListener(listenerNextTurn);
-        returnPanel.add(buttonNextTurn);
+        gbc.gridy=1;
+        returnPanel.add(buttonNextTurn,gbc);
 
         return returnPanel;
     }

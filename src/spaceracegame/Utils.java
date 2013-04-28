@@ -710,6 +710,11 @@ public class Utils {
         component.setPreferredSize(size);
         component.setSize(size);
     }
+    
+    public static void fixComponentSize(Component givenComponent){
+        Dimension size=givenComponent.getSize();
+        setDamnedSize(givenComponent, size);
+    }
 
     public static void loadLocalisedText() {
                     File file = new File("data/loacalizedtext.ini");
