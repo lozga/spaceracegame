@@ -22,6 +22,9 @@ public class Options {
     public static final int RESULT_INSTANT = 0;
     public static final int RESULT_SHORT = 1;
     public static final int RESULT_FULL = 2;
+    
+    public static boolean ismultiplayergame=false;
+    public static boolean isserver;
 
     public static void loadOptionsFile() {
         File file = new File("options.ini");

@@ -18,11 +18,11 @@ public class Nauts implements Serializable{
    public int recruitmentnumber = 0;
    public int[] arrayrecruitmentpools={8,10,20,20};
    
-   Player player;
-
-    Nauts(Player givenplayer) {
-        player=givenplayer;
-    }
+//   transient Player player;
+//
+//    Nauts(Player givenplayer) {
+//        player=givenplayer;
+//    }
 
    
    public ArrayList<String> getNames(ArrayList<Naut> givenNauts){

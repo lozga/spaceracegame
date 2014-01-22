@@ -18,14 +18,18 @@ import javax.swing.border.LineBorder;
  *
  * @author Terekhov F.V. <fterekhov@gmail.com>
  */
-public class PanelNauts implements Serializable{
+public class PanelNauts implements Serializable {
 
     JPanel panelListNauts;
     JPanel mainPanel;
     Player player;
-    
-        PanelNauts(Player givenplayer) {
-        player=givenplayer;
+
+    PanelNauts(Player givenplayer) {
+        player = givenplayer;
+    }
+
+    public void setPlayer(Player givenplayer) {
+        player = givenplayer;
     }
 
     public JPanel createPanelNauts() {
@@ -45,24 +49,23 @@ public class PanelNauts implements Serializable{
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.anchor=GridBagConstraints.PAGE_START;
+        gbc.anchor = GridBagConstraints.PAGE_START;
         mainPanel.add(upperPanel, gbc);
 
         gbc.gridy = 1;
         gbc.weighty = 40;
-        gbc.fill=GridBagConstraints.HORIZONTAL;
-        gbc.anchor=GridBagConstraints.PAGE_START;
-        mainPanel.add(createLowerPanel(),gbc);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.PAGE_START;
+        mainPanel.add(createLowerPanel(), gbc);
         return mainPanel;
     }
-    private transient ActionListener listenerNewCrew = new ActionListener() {
-
+    private ActionListener listenerNewCrew = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            
-            DialogHireNauts dhn= new DialogHireNauts(player);
+
+            DialogHireNauts dhn = new DialogHireNauts(player);
             dhn.createdialog();
-            
+
             updateListNauts();
         }
     };
@@ -74,37 +77,37 @@ public class PanelNauts implements Serializable{
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.anchor=GridBagConstraints.NORTH;
+        gbc.anchor = GridBagConstraints.NORTH;
         for (int i = 0; i < player.nauts.listNauts.size() + 1; i++) {
             if (i == 0) {
                 gbc.gridx = 0;
                 gbc.gridy = 0;
-                panelListNauts.add(new JLabel(Localisation.getText("name")),gbc);
+                panelListNauts.add(new JLabel(Localisation.getText("name")), gbc);
                 gbc.gridx = 1;
-                panelListNauts.add(new JLabel(Localisation.getText("cap")),gbc);
+                panelListNauts.add(new JLabel(Localisation.getText("cap")), gbc);
                 gbc.gridx = 2;
-                panelListNauts.add(new JLabel(Localisation.getText("lm")),gbc);
+                panelListNauts.add(new JLabel(Localisation.getText("lm")), gbc);
                 gbc.gridx = 3;
-                panelListNauts.add(new JLabel(Localisation.getText("eva")),gbc);
+                panelListNauts.add(new JLabel(Localisation.getText("eva")), gbc);
                 gbc.gridx = 4;
-                panelListNauts.add(new JLabel(Localisation.getText("do")),gbc);
+                panelListNauts.add(new JLabel(Localisation.getText("do")), gbc);
                 gbc.gridx = 5;
-                panelListNauts.add(new JLabel(Localisation.getText("end")),gbc);
+                panelListNauts.add(new JLabel(Localisation.getText("end")), gbc);
             } else {
                 gbc.gridy = i;
                 gbc.gridx = 0;
                 Naut tempNaut = player.nauts.listNauts.get(i - 1);
-                panelListNauts.add(new JLabel(tempNaut.getName()),gbc);
+                panelListNauts.add(new JLabel(tempNaut.getName()), gbc);
                 gbc.gridx = 1;
-                panelListNauts.add(new JLabel(Integer.toString(tempNaut.skillCapsule)),gbc);
+                panelListNauts.add(new JLabel(Integer.toString(tempNaut.skillCapsule)), gbc);
                 gbc.gridx = 2;
-                panelListNauts.add(new JLabel(Integer.toString(tempNaut.skillLM)),gbc);
+                panelListNauts.add(new JLabel(Integer.toString(tempNaut.skillLM)), gbc);
                 gbc.gridx = 3;
-                panelListNauts.add(new JLabel(Integer.toString(tempNaut.skillEVA)),gbc);
+                panelListNauts.add(new JLabel(Integer.toString(tempNaut.skillEVA)), gbc);
                 gbc.gridx = 4;
-                panelListNauts.add(new JLabel(Integer.toString(tempNaut.skillDock)),gbc);
+                panelListNauts.add(new JLabel(Integer.toString(tempNaut.skillDock)), gbc);
                 gbc.gridx = 5;
-                panelListNauts.add(new JLabel(Integer.toString(tempNaut.skillEndurance)),gbc);
+                panelListNauts.add(new JLabel(Integer.toString(tempNaut.skillEndurance)), gbc);
             }
         }
         mainPanel.validate();
@@ -117,5 +120,4 @@ public class PanelNauts implements Serializable{
         updateListNauts();
         return panelListNauts;
     }
-
 }

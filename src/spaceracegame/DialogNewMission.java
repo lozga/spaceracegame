@@ -186,7 +186,7 @@ public class DialogNewMission {
 
         int size = 2;
         listCrews = new MutableList[size];
-        JLabel labelMainCrew = new JLabel(Localisation.getText("main"));
+        JLabel labelMainCrew = new JLabel(Localisation.getText("maincrew"));
         labelMainCrew.setHorizontalAlignment(JLabel.CENTER);
         gbccrews.gridx = 0;
         gbccrews.gridy = 0;
@@ -508,7 +508,7 @@ public class DialogNewMission {
             MissionTypes selectedMissiontype = MissionTypesArray.findMissionTypeByName(listAvailableMissions.getSelectedValue().toString());
             boolean isLaunchwindow = LaunchWindows.isLaunchWindowFor(Dateutils.getDateMonthShift(1), selectedMissiontype.target)|((selectedMissiontype.target.equals(Localisation.getText("earth")))|(selectedMissiontype.target.equals(Localisation.getText("moon"))));
             SpaceObject rocket = Players.currentPlayer.spaceObjectArray.findObjectByName(listRocket.getSelectedValue().toString());
-            boolean isRocketResearched = Players.currentPlayer.research.verifyResearchByCode(rocket.getCode());
+            boolean isRocketResearched = Players.currentPlayer.research.isResearched(rocket.getCode());
             if (!isRocketResearched) {
                 errorString = errorString + "<li>"+Localisation.getText("norocketresearch");
             }
@@ -518,7 +518,7 @@ public class DialogNewMission {
             } else {
                 vehicle = Players.currentPlayer.spaceObjectArray.findObjectByName(listCompartibleVehicles.getSelectedValue().toString());
             }
-            boolean isVehicleResearched = Players.currentPlayer.research.verifyResearchByCode(vehicle.getCode());
+            boolean isVehicleResearched = Players.currentPlayer.research.isResearched(vehicle.getCode());
             if (!isVehicleResearched) {
                 errorString = errorString + "<li>"+Localisation.getText("novehicleresearch");
             }

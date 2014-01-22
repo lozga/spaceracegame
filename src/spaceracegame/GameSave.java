@@ -13,7 +13,8 @@ import java.util.Date;
  */
 public class GameSave {
     
-    public ArrayList<Player> players;
+    public ArrayList<PlayerSerialize> playersSerialize;
+//    public ArrayList<Player> players;
     public Date gamedate;
     
 }

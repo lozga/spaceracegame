@@ -26,6 +26,14 @@ public class Warehouse implements Serializable {
         player = givenPlayer;
     }
 
+    public void setPlayer(Player givenPlayer) {
+        player = givenPlayer;
+    }
+
+    public void removePlayer() {
+        player = null;
+    }
+
     public void initialize() {
         storehouse = new int[1000];
     }

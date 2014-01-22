@@ -125,4 +125,34 @@ public class SpaceObject implements Serializable{
         }
         return null;
     }
+    
+  public SpaceObjectSave createSave(){
+        SpaceObjectSave returnObjectSave=new SpaceObjectSave();
+        
+        returnObjectSave.code=code;
+        returnObjectSave.weight=weight;
+        returnObjectSave.durability=durability;
+        returnObjectSave.researchtime=researchtime;
+        returnObjectSave.ordertime=ordertime;
+        returnObjectSave.maxresearchpermonth=maxresearchpermonth;
+        returnObjectSave.maxdurability=maxdurability;
+        returnObjectSave.costToPurchase=costToPurchase;
+        returnObjectSave.costToResearch=costToResearch;
+        returnObjectSave.costToImprove=costToImprove;
+        
+        return returnObjectSave;
+    }
+    
+    public void loadSave(SpaceObjectSave givenSave){
+    code=givenSave.code;
+    weight=givenSave.weight;
+    durability=givenSave.durability;
+    researchtime=givenSave.researchtime;
+    ordertime=givenSave.ordertime;
+    maxresearchpermonth=givenSave.maxresearchpermonth;
+    maxdurability=givenSave.maxdurability;
+    costToPurchase=givenSave.costToPurchase;
+    costToResearch=givenSave.costToResearch;
+    costToImprove=givenSave.costToImprove;
+    }
 }

@@ -16,12 +16,12 @@ import javax.swing.border.TitledBorder;
  */
 public class DialogOptions {
 
-    private static JDialog dialogOptions;
+    private static JFrame dialogOptions;
     static JComboBox comboLanguage;
     static JTextField fieldLaunchDelay;
 
     public static void createOptionsDialog() {
-        dialogOptions = new JDialog((Frame) null, Localisation.getText("options"), true);
+        dialogOptions = new JFrame(Localisation.getText("options"));
         Utils.setDamnedSize(dialogOptions, new Dimension(200, 400));
         JPanel mainpanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

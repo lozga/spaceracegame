@@ -12,13 +12,21 @@ import java.util.Arrays;
  *
  * @author Terekhov F.V. <fterekhov@gmail.com>
  */
-public class Crews implements Serializable{
+public class Crews implements Serializable {
 
     public ArrayList<Crew> listCrews = new ArrayList<Crew>();
-    private Missions missions;
+    private transient Missions missions;
 
     Crews(Missions givenMissions) {
-        missions=givenMissions;
+        missions = givenMissions;
+    }
+
+    public void setMissions(Missions givenMissions) {
+        missions = givenMissions;
+    }
+
+    public void removeMissions() {
+        missions = null;
     }
 
     public boolean isCrewByVehicleAndNumber(int vehicle, int number) {
@@ -87,7 +95,7 @@ public class Crews implements Serializable{
         for (Crew tempCrew : listCrews) {
             if (vehiclecode != tempCrew.vehiclecode) {
                 for (int i = 0; i < tempCrew.crewname.size(); i++) {
-                    if (tempCrew.crewname.get(i).equals(name)){
+                    if (tempCrew.crewname.get(i).equals(name)) {
                         return true;
                     }
                 }

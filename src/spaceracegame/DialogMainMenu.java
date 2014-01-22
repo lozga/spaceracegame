@@ -43,10 +43,13 @@ public class DialogMainMenu {
         buttonLoadGame.addActionListener(listenerLoadGame);
         mainPanel.add(buttonLoadGame);
 
-        JButton buttonMultiplayer = new JButton(Localisation.getText("multiplayer"));
-        buttonMultiplayer.addActionListener(listenerMultiplayer);
-        buttonMultiplayer.setEnabled(false);
-        mainPanel.add(buttonMultiplayer);
+        JButton buttonHostGame = new JButton(Localisation.getText("hostmultiplayer"));
+        buttonHostGame.addActionListener(listenerHostGame);
+        mainPanel.add(buttonHostGame);
+
+        JButton buttonJoinGame = new JButton(Localisation.getText("joinmultiplayer"));
+        buttonJoinGame.addActionListener(listenerJoinGame);
+        mainPanel.add(buttonJoinGame);
 
         JButton buttonOptions = new JButton(Localisation.getText("options"));
         buttonOptions.addActionListener(listenerOptions);
@@ -64,24 +67,7 @@ public class DialogMainMenu {
         @Override
         public void actionPerformed(ActionEvent e) {
             mainFrame.dispose();
-            Players.initialize();
-            try {
-                spaceracegame.Utils.loadgamedata();
-            } catch (ParseException ex) {
-                Logger.getLogger(DialogMainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            Icons.initialize();
-            Dateutils.initialize();
-            for (Player tempPlayer : Players.players) {
-                tempPlayer.warehouse.initialize();
-                tempPlayer.research.initialize();
-
-            }
-            LaunchWindows.generateLaunchWindows();
-            DialogMainField.createMainField();
-            Players.currentPlayer.panelRIBs.verifybuttons();
-            PanelWarehouse.setWarehouse();
+            DialogMainField.startNewGame(false, false, true);
         }
     };
     private ActionListener listenerLoadGame = new ActionListener() {
@@ -93,9 +79,18 @@ public class DialogMainMenu {
             }
         }
     };
-    private ActionListener listenerMultiplayer = new ActionListener() {
+    private ActionListener listenerHostGame = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+            DialogMultiplayerStart.createDialog(true, false, mainFrame);
+        }
+    };
+    private ActionListener listenerJoinGame = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            DialogMultiplayerJoin dmj = new DialogMultiplayerJoin();
+            dmj.createDialog(mainFrame);
+
         }
     };
     private ActionListener listenerOptions = new ActionListener() {

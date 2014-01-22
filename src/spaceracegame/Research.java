@@ -14,21 +14,55 @@ import java.util.GregorianCalendar;
  *
  * @author Terekhov F.V. <fterekhov@gmail.com>
  */
-public class Research implements Serializable{
+public class Research implements Serializable {
 
     public ArrayList<StoreObject> research = new ArrayList<StoreObject>(); //Array for future deliveries of objects. Format: Date, Object
-    public boolean[] finished_research;
-    public boolean[] improve;
-    private Player player;
+    public ArrayList<Integer> finished_research;
+    public ArrayList<Integer> improve;
+    private transient Player player;
 
     Research(Player givenPlayer) {
         player = givenPlayer;
     }
 
+    public void setPlayer(Player givenPlayer) {
+        player = givenPlayer;
+    }
+
+    public void removePlayer() {
+        player = null;
+    }
+
     public void initialize() {
-        finished_research = new boolean[player.warehouse.storehouse.length];
-        finished_research[0] = true;
-        improve = new boolean[player.warehouse.storehouse.length];
+        finished_research = new ArrayList<Integer>();
+        finished_research.add(0);
+        improve = new ArrayList<Integer>();
+    }
+
+    public boolean isResearched(int code) {
+        for (int i : finished_research) {
+            if (i == code) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addImprove(int code) {
+        improve.add(code);
+    }
+
+    public void removeImprove(int code) {
+        improve.remove(code);
+    }
+
+    public boolean isImproving(int code) {
+        for (int i : improve) {
+            if (i == code) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<StoreObject> getResearchByDate(Date date) {
@@ -93,7 +127,7 @@ public class Research implements Serializable{
     public void parseResearch() {
         for (int i = 0; i < research.size(); i++) {
             if (research.get(i).objectdate.before(Dateutils.getDateMonthShift(1))) {
-                finished_research[research.get(i).objectcode] = true;
+                finished_research.add(research.get(i).objectcode);
                 research.remove(i);
                 i--;
             }
@@ -127,16 +161,6 @@ public class Research implements Serializable{
             }
         }
         return result;
-    }
-
-    public boolean verifyResearchByCode(int code) {
-
-        try {
-            return finished_research[code];
-        } catch (Exception e) {
-            return false;
-        }
-
     }
 
     public int getMonthsToFinish(int code) {

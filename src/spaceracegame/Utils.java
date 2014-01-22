@@ -4,6 +4,7 @@
  */
 package spaceracegame;
 
+import com.thoughtworks.xstream.XStream;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.io.*;
@@ -13,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.logging.Level;
@@ -779,5 +781,20 @@ public class Utils {
             }
         }
 
+    }
+    
+    //FOR DEBUG
+    
+    public static void debugWriteStringToFile (String givenString, String addtext){
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        timeStamp=timeStamp+" "+addtext+".txt";
+        File file = new File(timeStamp);
+            try {
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+                bw.write(givenString);
+                bw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(DialogMainField.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 }

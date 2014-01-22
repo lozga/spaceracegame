@@ -52,6 +52,10 @@ public class PanelRIBs implements Serializable {
         player = givenplayer;
     }
 
+    public void setPlayer(Player givenplayer) {
+        player = givenplayer;
+    }
+
     public JPanel createRIBPanel() {
         JPanel returnPanel = new JPanel(new GridLayout(1, 0));
         JTabbedPane tabbedRIB = new JTabbedPane();
@@ -102,8 +106,7 @@ public class PanelRIBs implements Serializable {
         returnPanel.add(tabbedRIB);
         return returnPanel;
     }
-    private transient ActionListener listenerToggleRocketResearch = new ActionListener() {
-
+    private ActionListener listenerToggleRocketResearch = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int number = Integer.parseInt(e.getActionCommand());
@@ -111,8 +114,7 @@ public class PanelRIBs implements Serializable {
             verifyButtonsForPurchase();
         }
     };
-    private transient ActionListener listenerTogglePayloadResearch = new ActionListener() {
-
+    private ActionListener listenerTogglePayloadResearch = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int number = Integer.parseInt(e.getActionCommand());
@@ -120,8 +122,7 @@ public class PanelRIBs implements Serializable {
             verifyButtonsForPurchase();
         }
     };
-    private transient ActionListener listenerToggleMannedResearch = new ActionListener() {
-
+    private ActionListener listenerToggleMannedResearch = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int number = Integer.parseInt(e.getActionCommand());
@@ -129,8 +130,7 @@ public class PanelRIBs implements Serializable {
             verifyButtonsForPurchase();
         }
     };
-    private transient ActionListener listenerButtonBuyRocket = new ActionListener() {
-
+    private ActionListener listenerButtonBuyRocket = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int number = Integer.parseInt(e.getActionCommand());
@@ -141,8 +141,7 @@ public class PanelRIBs implements Serializable {
             PanelWarehouse.setInfoData();
         }
     };
-    private transient ActionListener listenerButtonBuyPayload = new ActionListener() {
-
+    private ActionListener listenerButtonBuyPayload = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int number = Integer.parseInt(e.getActionCommand());
@@ -153,8 +152,7 @@ public class PanelRIBs implements Serializable {
             PanelWarehouse.setInfoData();
         }
     };
-    private transient ActionListener listenerButtonBuyManned = new ActionListener() {
-
+    private ActionListener listenerButtonBuyManned = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int number = Integer.parseInt(e.getActionCommand());
@@ -165,8 +163,7 @@ public class PanelRIBs implements Serializable {
             PanelWarehouse.setInfoData();
         }
     };
-    private transient ActionListener listenerToggleRocketImprove = new ActionListener() {
-
+    private ActionListener listenerToggleRocketImprove = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int number = Integer.parseInt(e.getActionCommand());
@@ -174,8 +171,7 @@ public class PanelRIBs implements Serializable {
             verifyButtonsForPurchase();
         }
     };
-    private transient ActionListener listenerTogglePayloadImprove = new ActionListener() {
-
+    private ActionListener listenerTogglePayloadImprove = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int number = Integer.parseInt(e.getActionCommand());
@@ -183,8 +179,7 @@ public class PanelRIBs implements Serializable {
             verifyButtonsForPurchase();
         }
     };
-    private transient ActionListener listenerToggleMannedImprove = new ActionListener() {
-
+    private ActionListener listenerToggleMannedImprove = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             int number = Integer.parseInt(e.getActionCommand());
@@ -192,8 +187,7 @@ public class PanelRIBs implements Serializable {
             verifyButtonsForPurchase();
         }
     };
-    private transient ActionListener listenerCrewSelection = new ActionListener() {
-
+    private ActionListener listenerCrewSelection = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             DialogCrewSelection.createCrewSelectionForm(Integer.parseInt(e.getActionCommand()));
@@ -215,22 +209,22 @@ public class PanelRIBs implements Serializable {
         JButton[] buttonBuy = new JButton[listObjectData.size()];
         JButton[] buttonCrew = new JButton[listObjectData.size()];
 
-                    panelmain = new JPanel(new GridBagLayout());
-                    GridBagConstraints gbc= new GridBagConstraints();
+        panelmain = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
         for (int i = 0;
                 i < listObjectData.size();
                 i++) {
             labelName[i] = new JLabel("<html>" + listObjectData.get(i).getName() + "<br>" + listObjectData.get(i).getModel() + "</html>");
-            gbc.fill=GridBagConstraints.BOTH;
-            gbc.gridx=0;
-            gbc.gridy=i;
-            gbc.weightx=1;
-            gbc.weighty=1;
-            panelmain.add(labelName[i],gbc);
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.gridx = 0;
+            gbc.gridy = i;
+            gbc.weightx = 1;
+            gbc.weighty = 1;
+            panelmain.add(labelName[i], gbc);
 
             labelRocketCapacity[i] = new JLabel(Integer.toString(listObjectData.get(i).getCapacity()));
-            gbc.gridx=1;
-            panelmain.add(labelRocketCapacity[i],gbc);
+            gbc.gridx = 1;
+            panelmain.add(labelRocketCapacity[i], gbc);
 
             toggleResearch[i] = new JToggleButton();
             toggleResearch[i].setLayout(new GridLayout(0, 1));
@@ -246,8 +240,8 @@ public class PanelRIBs implements Serializable {
             toggleResearch[i].setFocusable(false);
             toggleResearch[i].setActionCommand(Integer.toString(i));
             toggleResearch[i].addActionListener(listenerToggleResearch);
-            gbc.gridx=2;
-            panelmain.add(toggleResearch[i],gbc);
+            gbc.gridx = 2;
+            panelmain.add(toggleResearch[i], gbc);
 
             toggleImprove[i] = new JToggleButton();
             toggleImprove[i].setLayout(new GridLayout(0, 1));
@@ -260,8 +254,8 @@ public class PanelRIBs implements Serializable {
             toggleImprove[i].setFocusable(false);
             toggleImprove[i].setActionCommand(Integer.toString(i));
             toggleImprove[i].addActionListener(listenerToggleImprove);
-            gbc.gridx=3;
-            panelmain.add(toggleImprove[i],gbc);
+            gbc.gridx = 3;
+            panelmain.add(toggleImprove[i], gbc);
 
             buttonBuy[i] = new JButton();
             buttonBuy[i].setLayout(new GridLayout(0, 1));
@@ -277,19 +271,19 @@ public class PanelRIBs implements Serializable {
             buttonBuy[i].setFocusable(false);
             buttonBuy[i].addActionListener(listenerBuy);
             buttonBuy[i].setActionCommand(Integer.toString(i));
-            gbc.gridx=4;
-            panelmain.add(buttonBuy[i],gbc);
+            gbc.gridx = 4;
+            panelmain.add(buttonBuy[i], gbc);
 
             if (player.spaceObjectArray.isMannedbycode(listObjectData.get(i).getCode())) {
                 buttonCrew[i] = new JButton(Localisation.getText("crew"));
                 buttonCrew[i].setFocusable(false);
                 buttonCrew[i].addActionListener(listenerCrewSelection);
                 buttonCrew[i].setActionCommand(Integer.toString(listObjectData.get(i).getCode()));
-                gbc.gridx=5;
-                panelmain.add(buttonCrew[i],gbc);
+                gbc.gridx = 5;
+                panelmain.add(buttonCrew[i], gbc);
             }
 
-            Storage.panel=panelmain;
+            Storage.panel = panelmain;
         }
         Storage.panel.validate();
         Storage.toggleresearch = toggleResearch;
@@ -319,9 +313,9 @@ public class PanelRIBs implements Serializable {
 
     private void modify_improve(int code, JToggleButton button) {
         if (button.isSelected()) {
-            player.research.improve[code] = true;
+            player.research.addImprove(code);
         } else {
-            player.research.improve[code] = false;
+            player.research.removeImprove(code);
         }
     }
 
@@ -435,9 +429,9 @@ public class PanelRIBs implements Serializable {
     private void verifyButtonsByType(JToggleButton[] toggleResearch, JToggleButton[] toggleImprove, JButton[] buttonBuy, ArrayList<SpaceObject> listObjects, int storageNumber) {
         for (int i = 0; i < listObjects.size(); i++) {
             SpaceObject vehicle = listObjects.get(i);
-            boolean isResearched = player.research.finished_research[vehicle.getCode()];
+            boolean isResearched = player.research.isResearched(vehicle.getCode());
             if (!isResearched) { //If a rocket is not researched verify research availability
-                boolean enable = player.research.finished_research[vehicle.getPrerequisite()];
+                boolean enable = player.research.isResearched(vehicle.getPrerequisite());
                 toggleResearch[i].setEnabled(enable);
                 storageResearch[storageNumber][i] = enable;
                 setInnerLabelIcon(toggleResearch[i], enable, Icons.iconNotResearched);
@@ -499,31 +493,27 @@ public class PanelRIBs implements Serializable {
                     + " ,new durability - " + Integer.toString(player.spaceObjectArray.findObjectByCode(tempObject.objectcode).getDurability()));
         }
 
-        for (int i = 0; i < player.research.improve.length; i++) {
-            if (player.research.improve[i] == true) {
-                SpaceObject object = player.spaceObjectArray.findObjectByCode(i);
-                if (player.cash - object.getCostToResearch() >= 0) {
-                    object.adjustDurabilityMonthly();
-                    player.cash = player.cash - object.getCostToResearch();
-                } else {
-                    player.research.improve[i] = false;
-                    if (player.spaceObjectArray.isRocketbycode(i)) {
-//                        toggleRocketImprove[SpaceObjectArray.findObjectNumberByCode(i)].setSelected(false);
-                        setSafeSelected(toggleRocketImprove[player.spaceObjectArray.findObjectNumberByCode(i)], false);
-                    } else if (player.spaceObjectArray.isPayloadbycode(i)) {
-//                        togglePayloadImprove[SpaceObjectArray.findObjectNumberByCode(i)].setSelected(false);
-                        setSafeSelected(togglePayloadImprove[player.spaceObjectArray.findObjectNumberByCode(i)], false);
-                    } else if (player.spaceObjectArray.isMannedbycode(i)) {
-                        toggleMannedImprove[player.spaceObjectArray.findObjectNumberByCode(i)].setSelected(false);
-                        setSafeSelected(toggleMannedImprove[player.spaceObjectArray.findObjectNumberByCode(i)], false);
-                    }
+        for (int i = 0; i < player.research.improve.size(); i++) {
+            SpaceObject object = player.spaceObjectArray.findObjectByCode(player.research.improve.get(i));
+            if (player.cash - object.getCostToResearch() >= 0) {
+                object.adjustDurabilityMonthly();
+                player.cash = player.cash - object.getCostToResearch();
+            } else {
+                player.research.removeImprove(player.research.improve.get(i));
+                i = i - 1;
+                if (player.spaceObjectArray.isRocketbycode(i)) {
+                    setSafeSelected(toggleRocketImprove[player.spaceObjectArray.findObjectNumberByCode(i)], false);
+                } else if (player.spaceObjectArray.isPayloadbycode(i)) {
+                    setSafeSelected(togglePayloadImprove[player.spaceObjectArray.findObjectNumberByCode(i)], false);
+                } else if (player.spaceObjectArray.isMannedbycode(i)) {
+                    toggleMannedImprove[player.spaceObjectArray.findObjectNumberByCode(i)].setSelected(false);
+                    setSafeSelected(toggleMannedImprove[player.spaceObjectArray.findObjectNumberByCode(i)], false);
                 }
-                //FOR DEBUG
-                System.out.println("conduct research, object " + player.spaceObjectArray.findObjectByCode(i).getName()
-                        + " new durability" + Integer.toString(player.spaceObjectArray.findObjectByCode(i).getDurability()));
-                //END FOR DEBUG
-
             }
+            //FOR DEBUG
+            System.out.println("conduct research, object " + player.spaceObjectArray.findObjectByCode(i).getName()
+                    + " new durability" + Integer.toString(player.spaceObjectArray.findObjectByCode(i).getDurability()));
+            //END FOR DEBUG
         }
     }
 
@@ -543,13 +533,13 @@ public class PanelRIBs implements Serializable {
 
             if (player.spaceObjectArray.isRocketbycode(player.research.research.get(i).objectcode)) {
                 //we know code of researching object. So, label with the number of number of arraylist of researches with given code is receiving count of months to finish research
-                labelRocketResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode))+" " + Localisation.getText("month(s)"));
+                labelRocketResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode)) + " " + Localisation.getText("month(s)"));
             }
             if (player.spaceObjectArray.isPayloadbycode(player.research.research.get(i).objectcode)) {
-                labelPayloadResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode))+" " + Localisation.getText("month(s)"));
+                labelPayloadResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode)) + " " + Localisation.getText("month(s)"));
             }
             if (player.spaceObjectArray.isMannedbycode(player.research.research.get(i).objectcode)) {
-                labelMannedResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode))+" " + Localisation.getText("month(s)"));
+                labelMannedResearchtofinish[player.spaceObjectArray.findObjectNumberByCode(player.research.research.get(i).objectcode)].setText(Integer.toString(player.research.getMonthsToFinish(player.research.research.get(i).objectcode)) + " " + Localisation.getText("month(s)"));
             }
         }
     }

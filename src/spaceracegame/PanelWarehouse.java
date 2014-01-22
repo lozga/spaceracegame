@@ -22,6 +22,7 @@ public class PanelWarehouse {
     private static JLabel labelWarehouse;
     private static JLabel labelInfo;
     private static JLabel labelFlag;
+    private static JLabel labelPrestige;
 
     public static JPanel createWarehousePanel() {
         JPanel returnPanel = new JPanel(new GridBagLayout());
@@ -61,16 +62,22 @@ public class PanelWarehouse {
         gbc.gridy = 1;
         returnPanel.add(panelStatsandFlag, gbc);
 
-
+        labelPrestige = new JLabel("");
+        TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), Localisation.getText("prestige"), TitledBorder.CENTER, TitledBorder.CENTER);
+        labelPrestige.setBorder(title);
+        labelPrestige.setHorizontalAlignment(JLabel.LEFT);
+        labelPrestige.setVerticalAlignment(JLabel.TOP);
+        gbc.gridy = 2;
+        returnPanel.add(labelPrestige, gbc);
 
         labelWarehouse = new JLabel("");
-        TitledBorder title = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), Localisation.getText("warehouse"), TitledBorder.CENTER, TitledBorder.CENTER);
+        title = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), Localisation.getText("warehouse"), TitledBorder.CENTER, TitledBorder.CENTER);
         labelWarehouse.setBorder(title);
         labelWarehouse.setHorizontalAlignment(JLabel.LEFT);
         labelWarehouse.setVerticalAlignment(JLabel.TOP);
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 10;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         returnPanel.add(labelWarehouse, gbc);
 
         return returnPanel;
@@ -88,14 +95,24 @@ public class PanelWarehouse {
 
     public static void setInfoData() {
         String returnString = "<html>";
-        returnString = returnString + Localisation.getText("date") + ": " + Dateutils.gamedateformat.format(Dateutils.gamedate) + "<br>";
-        returnString = returnString + Localisation.getText("budget") + ": " + Integer.toString(Players.currentPlayer.cash) + "<br>";
-        returnString = returnString + Localisation.getText("prestige") + ": " + Integer.toString(Players.currentPlayer.prestige) + "<br>";
+        returnString = returnString + Localisation.getText("date") + ": <b>" + Dateutils.gamedateformat.format(Dateutils.gamedate) + "</b><br>";
+        returnString = returnString + Localisation.getText("budget") + ": <b>" + Integer.toString(Players.currentPlayer.cash) + "</b><br>";
+        returnString = returnString + Localisation.getText("prestige") + ": <b>" + Integer.toString(Players.currentPlayer.prestige) + "</b><br>";
         returnString = returnString + "</html>";
         labelInfo.setText(returnString);
+
+        returnString = "<html>";
+        for (Player player : Players.players) {
+            returnString = returnString + player.displayedname;
+            if (player.equals(Players.currentPlayer)) {
+                returnString = returnString + " " + Localisation.getText("you");
+            }
+            returnString = returnString + ": <b>" + Integer.toString(player.prestige) + "</b><br>";
+        }
+        returnString = returnString + "</html>";
+        labelPrestige.setText(returnString);
     }
     private static ActionListener listenerNewMission = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             DialogNewMission tmp = new DialogNewMission();

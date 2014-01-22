@@ -13,22 +13,22 @@ import javax.swing.ImageIcon;
  */
 public class Icons {
 
-    public static ImageIcon iconNoMoney;
+    public static ImageIcon iconNoMoney= createImageIcon("icons/dollar.png");
     public static ImageIcon iconEmpty;
-    public static ImageIcon iconNotResearched;
-    public static ImageIcon iconUSSRflag;
-    public static ImageIcon iconUSAflag;
-    public static ImageIcon iconUSSRflagsmall;
-    public static ImageIcon iconUSAflagsmall;
+    public static ImageIcon iconNotResearched= createImageIcon("icons/lightbulb_no.png");
+    public static ImageIcon iconUSSRflag= createImageIcon("icons/USSRflag.png");
+    public static ImageIcon iconUSAflag=createImageIcon("icons/USAflag.png");
+    public static ImageIcon iconUSSRflagsmall= createImageIcon("icons/USSRflagsmall.png");
+    public static ImageIcon iconUSAflagsmall= createImageIcon("icons/USAflagsmall.png");
 
-    public static void initialize() {
-        iconNoMoney = createImageIcon("icons/dollar.png");
-        iconNotResearched = createImageIcon("icons/lightbulb_no.png");
-        iconUSSRflag = createImageIcon("icons/USSRflag.png");
-        iconUSAflag = createImageIcon("icons/USAflag.png");
-        iconUSSRflagsmall = createImageIcon("icons/USSRflagsmall.png");
-        iconUSAflagsmall = createImageIcon("icons/USAflagsmall.png");
-    }
+//    public static void initialize() {
+//        iconNoMoney = createImageIcon("icons/dollar.png");
+//        iconNotResearched = createImageIcon("icons/lightbulb_no.png");
+//        iconUSSRflag = createImageIcon("icons/USSRflag.png");
+//        iconUSAflag = createImageIcon("icons/USAflag.png");
+//        iconUSSRflagsmall = createImageIcon("icons/USSRflagsmall.png");
+//        iconUSAflagsmall = createImageIcon("icons/USAflagsmall.png");
+//    }
 
     protected static ImageIcon createImageIcon(String path) {
         return new ImageIcon(path);

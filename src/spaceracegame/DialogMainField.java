@@ -30,7 +30,7 @@ public class DialogMainField {
     static JFileChooser fc = new JFileChooser();
 
     public static void createMainField() {
-        mainFrame = new JFrame(Localisation.getText("gamename"));
+        mainFrame = new JFrame(Localisation.getText("gamename")+" "+Boolean.toString(Options.isserver));
         Utils.setDamnedSize(mainFrame, new Dimension(900, 700));
         mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainFrame.setLocationRelativeTo(null);
@@ -48,7 +48,11 @@ public class DialogMainField {
         gbc.gridy = 0;
         JPanel panelLeft = new JPanel(new GridLayout(1, 0));
         panelLeft.setBackground(Color.DARK_GRAY);
-        panelLeft.add(createTabbedPanels());
+        if (Options.ismultiplayergame) {
+            panelLeft.add(createMultiplayerPanel());
+        } else {
+            panelLeft.add(createTabbedPanels());
+        }
         mainPanel.add(panelLeft, gbc);
 
         gbc.weightx = 5;
@@ -116,6 +120,17 @@ public class DialogMainField {
         return cardsPanel;
     }
 
+    public static JPanel createMultiplayerPanel() {
+        JPanel returnpanel = new JPanel(new GridLayout(0,1));
+
+        if (Options.isserver) { //Server is always first player
+            returnpanel.add(createOneCard(Players.players.get(0)));
+        } else {
+            returnpanel.add(createOneCard(Players.players.get(1)));
+        }
+        return returnpanel;
+    }
+
     public static JPanel createOneCard(Player givenPlayer) {
         JPanel returnPanel = new JPanel(new GridLayout(1, 0));
         JTabbedPane tabbedMainPane = new JTabbedPane();
@@ -173,7 +188,13 @@ public class DialogMainField {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
                 XStream xs = new XStream();
                 GameSave gs = new GameSave();
-                gs.players = Players.players;
+                ArrayList<PlayerSerialize> listps = new ArrayList<PlayerSerialize>();
+                for (Player tempplayer : Players.players) {
+                    PlayerSerialize ps = new PlayerSerialize();
+                    ps.getPlayerData(tempplayer);
+                    listps.add(ps);
+                }
+                gs.playersSerialize = listps;
                 gs.gamedate = Dateutils.gamedate;
                 String s = xs.toXML(gs);
                 bw.write(s);
@@ -185,7 +206,7 @@ public class DialogMainField {
     }
 
     public static int loadGame(Component givenComponent) {
-        int result=0;
+        int result = 0;
         int retval = fc.showOpenDialog(givenComponent);
         if (retval == JFileChooser.APPROVE_OPTION) {
             try {
@@ -193,13 +214,13 @@ public class DialogMainField {
             } catch (Exception ex) {
                 Logger.getLogger(DialogMainField.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Players.initialize();
+            Players.initialize(false, true, true);
             try {
                 spaceracegame.Utils.loadgamedata();
             } catch (ParseException ex) {
                 Logger.getLogger(DialogMainMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Icons.initialize();
+//            Icons.initialize();
             Dateutils.initialize();
             for (Player tempPlayer : Players.players) {
                 tempPlayer.warehouse.initialize();
@@ -208,7 +229,15 @@ public class DialogMainField {
             File file = fc.getSelectedFile();
             XStream xs = new XStream();
             GameSave gs = (GameSave) xs.fromXML(file);
-            Players.players = gs.players;
+            for (int i = 0; i < Players.players.size(); i++) {
+                Players.players.get(i).getPlayerSerializeData(gs.playersSerialize.get(i));
+            }
+
+//            Players.players=gs.players;
+
+//              for (int i=0;i<Players.players.size();i++){
+//                Players.players.get(i).upldatePlayerFields(gs.players.get(i));
+//            }          
             Dateutils.gamedate = gs.gamedate;
             LaunchWindows.generateLaunchWindows();
             DialogMainField.createMainField();
@@ -220,8 +249,35 @@ public class DialogMainField {
             Players.currentPlayer = Players.players.get(0);
             PanelLabelTable.setTableData();
             PanelWarehouse.setWarehouse();
-            result=1;
+            result = 1;
         }
         return result;
+    }
+
+    public static void startNewGame(boolean multiplayer, boolean isserver, boolean isplayer1USSR) {
+        Options.ismultiplayergame = multiplayer;
+        Options.isserver = isserver;
+        Players.initialize(multiplayer, isplayer1USSR, isserver);
+        try {
+            spaceracegame.Utils.loadgamedata();
+        } catch (ParseException ex) {
+            Logger.getLogger(DialogMainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//            Icons.initialize();
+        Dateutils.initialize();
+        for (Player tempPlayer : Players.players) {
+            tempPlayer.warehouse.initialize();
+            tempPlayer.research.initialize();
+        }
+        LaunchWindows.generateLaunchWindows();
+        DialogMainField.createMainField();
+        Players.currentPlayer.panelRIBs.verifybuttons();
+        PanelWarehouse.setWarehouse();
+        if (!Options.isserver){
+            SocketClient.sendClientIsAlive();
+        }
+        else{
+            SocketServer.sendServerIsAlive();
+        }
     }
 }

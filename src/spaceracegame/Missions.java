@@ -19,10 +19,18 @@ public class Missions implements Serializable{
 
     public ArrayList<Mission> MissionStorage;
     public ArrayList<Mission> MissionArchive;
-    private Player player;
+    private transient Player player;
 
     Missions(Player givenPlayer) {
         player = givenPlayer;
+    }
+    
+    public void setPlayer (Player givenPlayer) {
+        player = givenPlayer;
+    }
+    
+    public void removePlayer (){
+        player=null;
     }
 
 //    public boolean readyForLaunch() {

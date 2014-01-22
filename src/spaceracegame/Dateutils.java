@@ -37,7 +37,7 @@ public class Dateutils implements Serializable{
 
         System.out.println("Date initialized - "+gamedateformat.format(gamedate));
         
-        System.out.println(Locale.getAvailableLocales().toString());
+//        System.out.println(Locale.getAvailableLocales().toString());
 
     }
 
